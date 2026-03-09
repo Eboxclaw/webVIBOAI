@@ -1,0 +1,17 @@
+name = "webviboai"
+main = "worker.js"
+compatibility_date = "2024-11-01"
+account_id = "836ade685abebb6150aacf0420286683"
+assets = { directory = "./public" }
+
+[vars]
+# Comma-separated list of allowed frontend origins. Keep empty to allow all origins during early testing.
+ALLOWED_ORIGINS = ""
+# Optional: receive each signup in an external endpoint (Slack webhook, Make, Zapier, etc)
+WAITLIST_WEBHOOK_URL = ""
+
+# Optional KV storage (uncomment and replace values after creating namespaces)
+# [[kv_namespaces]]
+# binding = "WAITLIST_KV"
+# id = "replace_with_your_kv_namespace_id"
+# preview_id = "replace_with_your_preview_kv_namespace_id"
