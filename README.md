@@ -1,7 +1,5 @@
 # webVIBOAI
 
-# soberanoai
-
 Landing page for SoberanoAI with a Cloudflare Worker-powered waitlist endpoint.
 
 ## Architecture
