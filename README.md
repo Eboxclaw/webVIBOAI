@@ -32,7 +32,7 @@ Landing page for VIBOAI with a Cloudflare Worker-powered waitlist endpoint.
    ```bash
    wrangler deploy
    ```
-7. Open your worker URL (for example, `https://webvibo.workers.dev`) to view the landing page.
+7. Open your worker URL (for example, `https://webviboai.workers.dev`) to view the landing page.
 8. Frontend is now included at `public/index.html` so `wrangler deploy` can publish assets correctly.
 
 
@@ -45,7 +45,7 @@ export CLOUDFLARE_API_TOKEN="<your_api_token>"
 wrangler deploy
 ```
 
-This repository is configured for account `836ade685abebb6150aacf0420286683` and worker name `webvibo`, which maps to `https://webvibo.workers.dev`.
+This repository is configured for account `836ade685abebb6150aacf0420286683` and worker name `webviboai`, which maps to `https://webviboai.workers.dev`.
 
 ## Deploy troubleshooting
 
@@ -66,10 +66,13 @@ wrangler dev
 - `POST /api/waitlist`
 - Payload:
   ```json
-  { "email": "user@example.com", "source": "webvibo-landing" }
+  { "email": "user@example.com", "source": "viboai-landing" }
   ```
 - Responses:
   - `200` with `ok: true` when joined
   - `200` with `alreadyJoined: true` for duplicate submissions
   - `400` for invalid payload/email
   - `500` for storage/runtime failures
+
+
+If deploy fails with `Service unavailable [code: 7010]` during `assets-upload-session`, this is typically a transient Cloudflare API issue. Retry the same deploy command after a short wait.

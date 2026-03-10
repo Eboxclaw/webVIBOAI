@@ -101,7 +101,7 @@ function parseAllowedOrigins(value) {
 }
 
 function sanitizeSource(value) {
-  const source = String(value || 'soberanoai-landing').trim();
+  const source = String(value || 'viboai-landing').trim();
   return source.slice(0, 120);
 }
 
