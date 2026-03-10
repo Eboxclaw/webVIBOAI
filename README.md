@@ -4,7 +4,7 @@ Landing page for VIBOAI with a Cloudflare Worker-powered waitlist endpoint.
 
 ## Architecture
 
-- `public/index.html`: static landing page frontend.
+- `public/index.html`: static landing page frontend served by Cloudflare assets.
 - `worker.js`: serves static assets and handles `POST /api/waitlist`.
 - `wrangler.toml`: Cloudflare Worker + assets configuration.
 
@@ -33,7 +33,7 @@ Landing page for VIBOAI with a Cloudflare Worker-powered waitlist endpoint.
    wrangler deploy
    ```
 7. Open your worker URL (for example, `https://webvibo.workers.dev`) to view the landing page.
-8. This frontend defaults to `https://webvibo.workers.dev/api/waitlist` unless overridden by `window.WAITLIST_ENDPOINT` or `?waitlistEndpoint=`.
+8. Frontend is now included at `public/index.html` so `wrangler deploy` can publish assets correctly.
 
 
 
