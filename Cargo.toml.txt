@@ -1,0 +1,155 @@
+[package]
+name    = "vibo"
+version = "0.1.0"
+edition = "2021"
+rust-edition = "2021"
+
+# Build in release with full optimizations
+[profile.release]
+opt-level     = 3
+lto           = true
+codegen-units = 1
+panic         = "abort"
+strip         = true
+
+# Dev builds: faster compile, debug symbols
+[profile.dev]
+opt-level = 0
+debug     = true
+
+# ─────────────────────────────────────────
+# TAURI
+# ─────────────────────────────────────────
+
+[dependencies]
+tauri = { version = "2", features = [
+    "protocol-asset",   # serve assets from disk
+    "tray-icon",        # system tray (desktop)
+    "devtools",         # inspector in dev builds
+] }
+
+# Tauri plugins
+tauri-plugin-fs           = "2"
+tauri-plugin-shell        = "2"
+tauri-plugin-notification = "2"
+tauri-plugin-deep-link    = "2"
+
+# Biometric: Android + iOS only
+# On desktop this is a no-op — safe to include unconditionally
+tauri-plugin-biometric = "2"
+
+# ─────────────────────────────────────────
+# DATABASE
+# ─────────────────────────────────────────
+
+# SQLite — bundled so no system lib needed on any platform
+rusqlite = { version = "0.31", features = ["bundled", "load_extension"] }
+# load_extension → required for sqlite-vec (vec0 virtual tables)
+# sqlite-vec itself is loaded at runtime as a .so/.dylib/.dll
+# Download from: https://github.com/asg017/sqlite-vec/releases
+
+# ─────────────────────────────────────────
+# CRYPTO
+# ─────────────────────────────────────────
+
+aes-gcm  = "0.10"   # AES-256-GCM encryption
+argon2   = "0.5"    # Argon2id key derivation from PIN
+rand     = "0.8"    # Nonce + PKCE verifier generation
+sha2     = "0.10"   # PKCE code challenge (SHA-256)
+base64   = "0.22"   # Encode/decode encrypted blobs
+zeroize  = "1"      # Zero session key from memory on lock
+
+# ─────────────────────────────────────────
+# NETWORKING
+# ─────────────────────────────────────────
+
+reqwest = { version = "0.12", features = [
+    "json",     # .json() body serialization
+    "stream",   # streaming responses (LLM tokens)
+    "socks",    # Tor SOCKS5 proxy
+] }
+
+# ─────────────────────────────────────────
+# ASYNC
+# ─────────────────────────────────────────
+
+tokio = { version = "1", features = [
+    "full",     # runtime, time, process, io, sync
+] }
+futures-util = "0.3"    # stream combinators for SSE parsing
+
+# ─────────────────────────────────────────
+# SERIALIZATION
+# ─────────────────────────────────────────
+
+serde      = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"  # frontmatter parsing in notes.rs + vault.rs
+
+# ─────────────────────────────────────────
+# UTILITIES
+# ─────────────────────────────────────────
+
+chrono   = { version = "0.4", features = ["serde"] }    # timestamps everywhere
+uuid     = { version = "1",   features = ["v4"] }       # note/job/card IDs
+regex    = "1"                                           # routing_signals pattern match
+url      = "2"                                           # OAuth URL building
+num_cpus = "1"                                           # CCP core count
+
+# ─────────────────────────────────────────
+# PLATFORM-SPECIFIC
+# ─────────────────────────────────────────
+
+# Keyring: OS-level secret storage (fallback if vault is not yet set up)
+# Used only for bootstrap — all runtime secrets go through crypto.rs keystore
+[target.'cfg(target_os = "macos")'.dependencies]
+security-framework = "2"    # macOS Keychain access (optional, for future use)
+
+# ─────────────────────────────────────────
+# BUILD DEPENDENCIES
+# ─────────────────────────────────────────
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+# ─────────────────────────────────────────
+# FEATURES
+# ─────────────────────────────────────────
+
+[features]
+default         = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]
+
+# ─────────────────────────────────────────
+# WORKSPACE (if using monorepo layout)
+# ─────────────────────────────────────────
+# [workspace]
+# members = ["src-tauri"]
+
+# ─────────────────────────────────────────
+# NOTES ON RUNTIME DEPENDENCIES (not Cargo)
+# ─────────────────────────────────────────
+#
+# sqlite-vec:
+#   Download the correct binary for each platform from:
+#   https://github.com/asg017/sqlite-vec/releases
+#   Place at: src-tauri/libs/vec0.{so|dylib|dll}
+#   Loaded at runtime in storage.rs: conn.load_extension(...)
+#
+# Python (Unsloth training — desktop only):
+#   pip install unsloth trl transformers datasets
+#   Only needed if user wants local fine-tuning
+#   Mobile falls back to CCP/Exo or disables training
+#
+# Tor (optional):
+#   tor daemon must be running at socks5://127.0.0.1:9050
+#   ViBo does not bundle Tor — user installs separately
+#   Enabled via providers_tor_set(true) only if daemon is reachable
+#
+# Exo (optional compute scaler):
+#   pip install exo
+#   Started externally or via training::exo_set_endpoint()
+#
+# Kotlin sidecar (Koog agent):
+#   Built separately, communicates via Tauri IPC invoke/listen
+#   See: src/kotlin/AgentService.kt
