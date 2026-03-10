@@ -1,4 +1,4 @@
-name = "webviboai"
+name = "viboai"
 main = "worker.js"
 compatibility_date = "2024-11-01"
 account_id = "836ade685abebb6150aacf0420286683"

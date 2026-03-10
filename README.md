@@ -4,7 +4,7 @@ Landing page for VIBOAI with a Cloudflare Worker-powered waitlist endpoint.
 
 ## Architecture
 
-- `public/index.html`: static landing page frontend.
+- `public/index.html`: static landing page frontend served by Cloudflare assets.
 - `worker.js`: serves static assets and handles `POST /api/waitlist`.
 - `wrangler.toml`: Cloudflare Worker + assets configuration.
 
@@ -32,8 +32,8 @@ Landing page for VIBOAI with a Cloudflare Worker-powered waitlist endpoint.
    ```bash
    wrangler deploy
    ```
-7. Open your worker URL (for example, `https://webvibo.workers.dev`) to view the landing page.
-8. This frontend defaults to `https://webvibo.workers.dev/api/waitlist` unless overridden by `window.WAITLIST_ENDPOINT` or `?waitlistEndpoint=`.
+7. Open your worker URL (for example, `https://viboai.workers.dev`) to view the landing page.
+8. Frontend is now included at `public/index.html` so `wrangler deploy` can publish assets correctly.
 
 
 
@@ -45,7 +45,7 @@ export CLOUDFLARE_API_TOKEN="<your_api_token>"
 wrangler deploy
 ```
 
-This repository is configured for account `836ade685abebb6150aacf0420286683` and worker name `webvibo`, which maps to `https://webvibo.workers.dev`.
+This repository is configured for account `836ade685abebb6150aacf0420286683` and worker name `viboai`, which maps to `https://viboai.workers.dev`.
 
 ## Deploy troubleshooting
 
@@ -66,7 +66,7 @@ wrangler dev
 - `POST /api/waitlist`
 - Payload:
   ```json
-  { "email": "user@example.com", "source": "webvibo-landing" }
+  { "email": "user@example.com", "source": "viboai-landing" }
   ```
 - Responses:
   - `200` with `ok: true` when joined
