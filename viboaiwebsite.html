@@ -197,12 +197,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:cen
 /* ═══════════ PLUGINS ═══════════ */
 .plugins-bg{background:var(--bg2);padding:96px 40px;}
 .plugins-inner{max-width:1120px;margin:0 auto;}
-.plug-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2px;background:rgba(107,92,231,.06);margin-top:48px;}
-.plug{background:var(--bg2);padding:26px;transition:all .3s;cursor:none;position:relative;overflow:hidden;}
+.plug-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2px;background:rgba(107,92,231,.06);margin-top:48px;align-items:stretch;}
+.plug{background:var(--bg2);padding:26px;transition:all .3s;cursor:none;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;min-height:330px;text-align:center;}
 .plug:hover{background:var(--white);transform:translateY(-3px);z-index:2;box-shadow:0 14px 48px rgba(10,9,24,.07);}
 .plug::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--pa),var(--pb));opacity:0;transition:opacity .3s;}
 .plug:hover::before{opacity:.4;}
-.plug-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;position:relative;z-index:1;}
+.plug-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;position:relative;z-index:1;width:100%;}
 .plug-logo{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:var(--white);border:1px solid rgba(107,92,231,.07);overflow:hidden;padding:7px;}
 .plug-logo svg{width:100%;height:100%;}
 .plug-status{display:flex;align-items:center;gap:5px;font-size:8px;letter-spacing:.14em;text-transform:uppercase;}
@@ -212,10 +212,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:cen
 .pdot.avail{background:var(--amber);}
 .plug-name{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;text-transform:uppercase;margin-bottom:3px;position:relative;z-index:1;}
 .plug-sub{font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:var(--pu);margin-bottom:9px;position:relative;z-index:1;}
-.plug-desc{font-size:10px;color:var(--mid);line-height:1.7;margin-bottom:14px;position:relative;z-index:1;}
-.plug-pill{display:inline-block;padding:3px 10px;border:1px solid rgba(107,92,231,.18);border-radius:2px;font-size:8px;letter-spacing:.12em;color:var(--mid);margin-bottom:12px;position:relative;z-index:1;}
+.plug-desc{font-size:10px;color:var(--mid);line-height:1.7;margin-bottom:14px;position:relative;z-index:1;flex:1;display:flex;align-items:center;justify-content:center;width:100%;}
+.plug-pill{display:inline-block;padding:3px 10px;border:1px solid rgba(107,92,231,.18);border-radius:2px;font-size:8px;letter-spacing:.12em;color:var(--mid);margin:0 auto 12px;position:relative;z-index:1;}
 .plug-pill.active{background:rgba(107,92,231,.07);color:var(--pu);border-color:rgba(107,92,231,.25);}
-.plug-btn{display:block;width:100%;padding:9px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.17em;text-transform:uppercase;text-align:center;border:1px solid rgba(107,92,231,.15);background:transparent;color:var(--mid);cursor:none;transition:all .25s;position:relative;z-index:1;}
+.plug-btn{display:block;width:100%;padding:9px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.17em;text-transform:uppercase;text-align:center;border:1px solid rgba(107,92,231,.15);background:transparent;color:var(--mid);cursor:none;transition:all .25s;position:relative;z-index:1;margin-top:auto;}
 .plug-btn.on{background:rgba(107,92,231,.07);color:var(--pu);border-color:rgba(107,92,231,.25);}
 .plug-btn:hover{background:var(--ink);color:var(--bg);border-color:var(--ink);}
 
@@ -622,7 +622,7 @@ footer{padding:32px 40px;border-top:1px solid rgba(107,92,231,.07);display:flex;
       <div class="plug-sub">// Distributed inference mesh</div>
       <div class="plug-desc">Share RAM across your devices for larger models. Run 70B models across phone, laptop and home server with encrypted peer links   no cloud required.</div>
       <div class="plug-pill">RAM sharing · peer inference</div>
-      <button class="plug-btn" style="margin-top:10px;">+ Add plugin</button>
+      <button class="plug-btn">+ Add plugin</button>
     </div>
 
     <!-- ANTHROPIC -->
